@@ -8,6 +8,7 @@ import {ITrackingService} from "./itracking.service";
 import {Tracking} from "../common/types";
 import {StatusTypes} from "../enums";
 import {CommonUtils} from "../common/common-utils";
+import {RequiredFieldsException} from "../exceptions/required-fields.exception";
 
 @Injectable()
 export class TrackingService implements ITrackingService{
@@ -16,8 +17,8 @@ export class TrackingService implements ITrackingService{
         private trackingModel: Model<Tracking>) {}
 
     public async createTracking(tracking: Tracking): Promise<{ _id: ObjectId | undefined }> {
-        if (!tracking || (tracking && !Object.keys(tracking))) {
-            throw new Error('Tracking object is empty')
+        if (!tracking || (tracking && !Object.keys(tracking).length)) {
+            throw new RequiredFieldsException('Tracking object is empty')
         }
 
         const formattedTracking = {
@@ -35,7 +36,7 @@ export class TrackingService implements ITrackingService{
         })
 
         if (errors.length) {
-            throw new Error(errors.join(';'))
+            throw new RequiredFieldsException(errors.join(';'))
         }
 
         Object.keys(tracking).forEach((key) => {
