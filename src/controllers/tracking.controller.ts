@@ -1,8 +1,9 @@
 import {Body, Controller, Delete, Get, Param, Post, Put, Query} from "@nestjs/common";
 import {TrackingService} from "../services/tracking.service";
-import {ApiOperation, ApiBody} from "@nestjs/swagger";
-import {Tracking} from "../common/types";
+import {ApiOperation, ApiBody, ApiQuery} from "@nestjs/swagger";
+import {SearchOptions, Tracking} from "../common/types";
 import {TrackingModel, TrackingSchema} from "../models/tracking.model";
+import {StatusTypes} from "../enums";
 
 @Controller('tracking')
 export class TrackingController {
@@ -11,6 +12,10 @@ export class TrackingController {
     }
 
     @Get()
+    @ApiQuery({name: 'limit', example: '10'})
+    @ApiQuery({name: 'skip', example: '0'})
+    @ApiQuery({name: 'sort', example: 'createdAt:desc'})
+    @ApiQuery({name: 'status', enum: StatusTypes, example: StatusTypes.Active, required: false})
     public async getTrackings(@Query() query): Promise<any> {
         return this.trackingService.getTrackings(query)
     }
@@ -18,7 +23,7 @@ export class TrackingController {
 
     @Post()
     @ApiOperation({ summary: 'Create Tracking item' })
-    @ApiBody({type: TrackingModel, required: true})
+    @ApiBody({type: TrackingModel,  required: true})
     public async createTracking(@Body() body: Tracking): Promise<any>{
         return this.trackingService.createTracking(body)
     }

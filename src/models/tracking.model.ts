@@ -2,6 +2,7 @@ import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
 import {Schema as MongooseSchema} from 'mongoose';
 import {SearchOptions} from "../common/types";
 import {ApiProperty} from "@nestjs/swagger";
+import {StatusTypes} from "../enums";
 
 @Schema({
     timestamps: true,
@@ -13,11 +14,11 @@ export class TrackingModel {
     searchText: string;
 
     @Prop({required: true, type: MongooseSchema.Types.Mixed})
-    @ApiProperty({default: {inChannels: false, inChats: false}})
+    @ApiProperty({type: Object, default: {inChannels: false, inChats: false}})
     searchOptions: SearchOptions;
 
     @Prop()
-    @ApiProperty({default: 'Активний'})
+    @ApiProperty({type: String, enum: StatusTypes, default: 'Активний'})
     status: string;
 }
 
