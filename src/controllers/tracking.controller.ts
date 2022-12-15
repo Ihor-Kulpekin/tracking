@@ -33,7 +33,7 @@ export class TrackingController {
     @Put('/:id')
     @ApiOperation({summary: 'Update Tracking item'})
     @ApiParam({name: '_id', type: String})
-    @ApiBody({required: false, type: PartialType<Tracking>})
+    @ApiBody({required: true})
     public async updateTracking(@Param() _id: string, @Body() body): Promise<any> {
         return this.trackingService.updateTracking(_id, body);
     }
