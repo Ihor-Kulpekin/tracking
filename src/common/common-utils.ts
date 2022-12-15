@@ -18,11 +18,11 @@ export class CommonUtils {
 
         if (query) {
             if(query.limit) {
-                options.limit = query.limit
+                options.limit = Number(query.limit)
             }
 
             if (query.skip) {
-                options.skip = query.skip
+                options.skip = Number(query.skip)
             }
 
             if (query.sort) {
