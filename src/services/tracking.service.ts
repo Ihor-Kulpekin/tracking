@@ -117,7 +117,7 @@ export class TrackingService implements ITrackingService{
         });
 
         if (errors.length) {
-            throw new Error(errors.join(';'))
+            throw new RequiredFieldsException(errors.join(';'))
         }
 
         const result = await this.trackingModel.updateOne({_id: new ObjectId(bodyParams.trackingId)}, {
