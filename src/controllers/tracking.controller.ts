@@ -12,6 +12,7 @@ export class TrackingController {
     }
 
     @Get()
+    @ApiOperation({summary: 'Get List items'})
     @ApiQuery({name: 'limit', example: '10'})
     @ApiQuery({name: 'skip', example: '0'})
     @ApiQuery({name: 'sort', example: 'createdAt:desc'})
