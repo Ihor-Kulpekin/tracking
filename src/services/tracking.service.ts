@@ -105,4 +105,26 @@ export class TrackingService implements ITrackingService{
             updated: !!updated.modifiedCount
         };
     }
+
+    public async changeStatus(bodyParams: any): Promise<{ changed: boolean }> {
+        const errors = [];
+
+        ['trackingId', 'status'].forEach((field) => {
+            if (!bodyParams[field]) {
+                errors.push(`${field} is mandatory`)
+            }
+        });
+
+        if (errors.length) {
+            throw new Error(errors.join(';'))
+        }
+
+        const result = await this.trackingModel.updateOne({_id: new ObjectId(bodyParams.trackingId)}, {
+            $set: {status: bodyParams.status}
+        })
+
+        return {
+            changed: !!result.modifiedCount
+        };
+    }
 }

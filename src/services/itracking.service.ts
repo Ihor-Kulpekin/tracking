@@ -6,4 +6,5 @@ export interface ITrackingService {
     createTracking(tracking: Tracking): Promise<{ _id: ObjectId | undefined }>;
     updateTracking(_id: string, bodyParams: any): Promise<{updated: boolean}>;
     deleteTracking(_id: string): Promise<{ deleted: boolean }>;
+    changeStatus(bodyParams: any): Promise<{changed: boolean}>
 }
