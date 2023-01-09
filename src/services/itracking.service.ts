@@ -1,13 +1,18 @@
-import {Tracking} from "../common/types";
-import { ObjectId } from 'mongodb';
 import {CreateTrackingDto} from "../dto/create-tracking.dto";
 import {ChangeStatusDto} from "../dto/change-status.dto";
 import {UpdateTrackingDto} from "../dto/update-tracking.dto";
+import {
+    ResponseChangeStatusTrackingDto,
+    ResponseCreateTrackingDto,
+    ResponseDeleteTrackingDto,
+    ResponseListTrackingDto,
+    ResponseUpdateTrackingDto
+} from '../dto/response.dto';
 
 export interface ITrackingService {
-    getTrackings(query: any): Promise<{ totalCount: number; items: Tracking[] }>;
-    createTracking(tracking: CreateTrackingDto): Promise<{ _id: ObjectId | undefined }>;
-    updateTracking(_id: string, bodyParams: UpdateTrackingDto): Promise<{updated: boolean}>;
-    deleteTracking(_id: string): Promise<{ deleted: boolean }>;
-    changeStatus(bodyParams: ChangeStatusDto): Promise<{changed: boolean}>
+    getTrackings(query: any): Promise<ResponseListTrackingDto>;
+    createTracking(tracking: CreateTrackingDto): Promise<ResponseCreateTrackingDto>;
+    updateTracking(_id: string, bodyParams: UpdateTrackingDto): Promise<ResponseUpdateTrackingDto>;
+    deleteTracking(_id: string): Promise<ResponseDeleteTrackingDto>;
+    changeStatus(bodyParams: ChangeStatusDto): Promise<ResponseChangeStatusTrackingDto>
 }

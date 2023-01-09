@@ -1,5 +1,7 @@
+import {QueryDto} from "../dto/query.dto";
+
 export class CommonUtils {
-    static getFilters(query: any) {
+    static getFilters(query: QueryDto) {
         const filters = {};
 
         const keys = Object.keys(query).filter((item) => !['limit', 'skip', 'sort'].includes(item));
@@ -13,7 +15,7 @@ export class CommonUtils {
         return filters
     }
 
-    static getOptions(query: any) {
+    static getOptions(query: QueryDto) {
         const options: any = {};
 
         if (query) {

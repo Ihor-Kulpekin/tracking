@@ -11,6 +11,13 @@ import {CommonUtils} from "../common/common-utils";
 import {CreateTrackingDto} from "../dto/create-tracking.dto";
 import {ChangeStatusDto} from "../dto/change-status.dto";
 import {UpdateTrackingDto} from "../dto/update-tracking.dto";
+import {
+    ResponseChangeStatusTrackingDto,
+    ResponseCreateTrackingDto,
+    ResponseDeleteTrackingDto,
+    ResponseListTrackingDto,
+    ResponseUpdateTrackingDto
+} from "../dto/response.dto";
 
 @Injectable()
 export class TrackingService implements ITrackingService{
@@ -18,7 +25,7 @@ export class TrackingService implements ITrackingService{
         @InjectModel(TrackingModel.name)
         private trackingModel: Model<Tracking>) {}
 
-    public async createTracking(tracking: CreateTrackingDto): Promise<{ _id: ObjectId | undefined }> {
+    public async createTracking(tracking: CreateTrackingDto): Promise<ResponseCreateTrackingDto> {
         const formattedTracking = {
             status: StatusTypes.Active
         };
@@ -34,7 +41,7 @@ export class TrackingService implements ITrackingService{
         };
     }
 
-    public async deleteTracking(_id: string): Promise<{ deleted: boolean }> {
+    public async deleteTracking(_id: string): Promise<ResponseDeleteTrackingDto> {
         const deleted = await this.trackingModel.remove({_id: new ObjectId(_id)})
 
         return {
@@ -42,7 +49,7 @@ export class TrackingService implements ITrackingService{
         };
     }
 
-    public async getTrackings(query: any): Promise<{ totalCount: number; items: Tracking[] }> {
+    public async getTrackings(query: any): Promise<ResponseListTrackingDto> {
         const filters = CommonUtils.getFilters(query);
         const projection = CommonUtils.getOptions(query);
 
@@ -55,7 +62,7 @@ export class TrackingService implements ITrackingService{
         };
     }
 
-    public async updateTracking(_id: string, bodyParams: UpdateTrackingDto): Promise<{ updated: boolean }> {
+    public async updateTracking(_id: string, bodyParams: UpdateTrackingDto): Promise<ResponseUpdateTrackingDto> {
         await this.trackingModel.updateOne({_id: new ObjectId(_id)}, {$set: {...bodyParams}});
 
         return {
@@ -63,7 +70,7 @@ export class TrackingService implements ITrackingService{
         };
     }
 
-    public async changeStatus(bodyParams: ChangeStatusDto): Promise<{ changed: boolean }> {
+    public async changeStatus(bodyParams: ChangeStatusDto): Promise<ResponseChangeStatusTrackingDto> {
         const result = await this.trackingModel.updateOne({_id: new ObjectId(bodyParams.trackingId)}, {
             $set: {status: bodyParams.status}
         })
