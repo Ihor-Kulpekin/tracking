@@ -9,7 +9,7 @@ import {Tracking} from "../common/types";
 import {StatusTypes} from "../enums";
 import {CommonUtils} from "../common/common-utils";
 import {RequiredFieldsException} from "../exceptions/required-fields.exception";
-import {TrackingDto} from "../dto/tracking.dto";
+import {CreateTrackingDto} from "../dto/create-tracking.dto";
 
 @Injectable()
 export class TrackingService implements ITrackingService{
@@ -17,28 +17,10 @@ export class TrackingService implements ITrackingService{
         @InjectModel(TrackingModel.name)
         private trackingModel: Model<Tracking>) {}
 
-    public async createTracking(tracking: TrackingDto): Promise<{ _id: ObjectId | undefined }> {
-        if (!tracking || (tracking && !Object.keys(tracking).length)) {
-            throw new RequiredFieldsException('Tracking object is empty')
-        }
-
+    public async createTracking(tracking: CreateTrackingDto): Promise<{ _id: ObjectId | undefined }> {
         const formattedTracking = {
             status: StatusTypes.Active
         };
-
-        const requiredFields = ['searchOptions','searchText'];
-
-        const errors = [];
-
-        requiredFields.forEach((field) => {
-            if (!tracking[field]) {
-                errors.push(`The field ${field} is absent in object`)
-            }
-        })
-
-        if (errors.length) {
-            throw new RequiredFieldsException(errors.join(';'))
-        }
 
         Object.keys(tracking).forEach((key) => {
             formattedTracking[key] = tracking[key];
