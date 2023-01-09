@@ -10,6 +10,7 @@ import {StatusTypes} from "../enums";
 import {CommonUtils} from "../common/common-utils";
 import {CreateTrackingDto} from "../dto/create-tracking.dto";
 import {ChangeStatusDto} from "../dto/change-status.dto";
+import {UpdateTrackingDto} from "../dto/update-tracking.dto";
 
 @Injectable()
 export class TrackingService implements ITrackingService{
@@ -54,25 +55,11 @@ export class TrackingService implements ITrackingService{
         };
     }
 
-    public async updateTracking(_id: string, bodyParams: any): Promise<{ updated: boolean }> {
-        const updatedObject = {};
-
-        ['searchText', 'searchOptions', 'status'].forEach((item) => {
-            if (bodyParams[item] && item !== 'searchOptions') {
-                updatedObject[item] = bodyParams[item]
-            } else if (bodyParams[item] && item === 'searchOptions') {
-                ['inChannels', 'inChats'].forEach((keyItem) => {
-                    if (bodyParams[item][keyItem]) {
-                        updatedObject[item][keyItem] = bodyParams[item][keyItem];
-                    }
-                });
-            }
-        })
-
-        await this.trackingModel.updateOne({_id: new ObjectId(_id)}, {$set: {...updatedObject}});
+    public async updateTracking(_id: string, bodyParams: UpdateTrackingDto): Promise<{ updated: boolean }> {
+        await this.trackingModel.updateOne({_id: new ObjectId(_id)}, {$set: {...bodyParams}});
 
         return {
-            updated: !!Object.keys(updatedObject).length
+            updated: !!Object.keys(bodyParams).length
         };
     }
 
