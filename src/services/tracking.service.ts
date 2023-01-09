@@ -10,6 +10,8 @@ import {StatusTypes} from "../enums";
 import {CommonUtils} from "../common/common-utils";
 import {RequiredFieldsException} from "../exceptions/required-fields.exception";
 import {CreateTrackingDto} from "../dto/create-tracking.dto";
+import {FindOneParams} from "../dto/find-one-params.dto";
+import {ChangeStatusDto} from "../dto/change-status.dto";
 
 @Injectable()
 export class TrackingService implements ITrackingService{
@@ -55,54 +57,28 @@ export class TrackingService implements ITrackingService{
     }
 
     public async updateTracking(_id: string, bodyParams: any): Promise<{ updated: boolean }> {
-        if (!bodyParams || (bodyParams && !Object.keys(bodyParams).length)) {
-            return {
-                updated: false
-            }
-        }
-
-        const trackingBeforeUpdate = await this.trackingModel.findOne({_id: new ObjectId(_id)});
-
         const updatedObject = {};
 
-        const keys = Object.keys(trackingBeforeUpdate).filter((keyItem) => ['searchText', 'searchOptions', 'status'].includes(keyItem));
-
-        keys.forEach((item) => {
+        ['searchText', 'searchOptions', 'status'].forEach((item) => {
             if (bodyParams[item] && item !== 'searchOptions') {
                 updatedObject[item] = bodyParams[item]
             } else if (bodyParams[item] && item === 'searchOptions') {
                 ['inChannels', 'inChats'].forEach((keyItem) => {
                     if (bodyParams[item][keyItem]) {
                         updatedObject[item][keyItem] = bodyParams[item][keyItem];
-                    } else {
-                        updatedObject[item][keyItem] = trackingBeforeUpdate[item][keyItem];
                     }
                 });
-            } else {
-                updatedObject[item] = trackingBeforeUpdate[item]
             }
         })
 
-        const updated = await this.trackingModel.updateOne({_id: new ObjectId(_id)}, {$set: {...updatedObject}})
+        await this.trackingModel.updateOne({_id: new ObjectId(_id)}, {$set: {...updatedObject}});
 
         return {
-            updated: !!updated.modifiedCount
+            updated: !!Object.keys(updatedObject).length
         };
     }
 
-    public async changeStatus(bodyParams: any): Promise<{ changed: boolean }> {
-        const errors = [];
-
-        ['trackingId', 'status'].forEach((field) => {
-            if (!bodyParams[field]) {
-                errors.push(`${field} is mandatory`)
-            }
-        });
-
-        if (errors.length) {
-            throw new RequiredFieldsException(errors.join(';'))
-        }
-
+    public async changeStatus(bodyParams: ChangeStatusDto): Promise<{ changed: boolean }> {
         const result = await this.trackingModel.updateOne({_id: new ObjectId(bodyParams.trackingId)}, {
             $set: {status: bodyParams.status}
         })

@@ -3,6 +3,9 @@ import {TrackingService} from "../services/tracking.service";
 import {ApiOperation, ApiBody, ApiQuery, ApiParam, ApiTags} from "@nestjs/swagger";
 import {StatusTypes} from "../enums";
 import {CreateTrackingDto} from "../dto/create-tracking.dto";
+import {UpdateTrackingDto} from "../dto/update-tracking.dto";
+import {FindOneParams} from "../dto/find-one-params.dto";
+import {ChangeStatusDto} from "../dto/change-status.dto";
 
 @Controller('tracking')
 @ApiTags('tracking')
@@ -31,22 +34,22 @@ export class TrackingController {
 
     @Put('/:id')
     @ApiOperation({summary: 'Update Tracking item'})
-    @ApiParam({name: '_id', type: String})
+    @ApiParam({name: '_id', type: String, required: true})
     @ApiBody({required: true})
-    public async updateTracking(@Param() _id: string, @Body() body): Promise<any> {
-        return this.trackingService.updateTracking(_id, body);
+    public async updateTracking(@Param() params: FindOneParams, @Body() updateTrackingDto: UpdateTrackingDto): Promise<any> {
+        return this.trackingService.updateTracking(params.id, updateTrackingDto);
     }
 
     @Delete('/:id')
     @ApiOperation({summary: 'Delete Tracking item'})
     @ApiParam({name: '_id', type: String})
-    public async deleteTracking(@Param() _id: string): Promise<any> {
-        return this.trackingService.deleteTracking(_id);
+    public async deleteTracking(@Param() params: FindOneParams): Promise<any> {
+        return this.trackingService.deleteTracking(params.id);
     }
 
     @Post('/change-status')
     @ApiOperation({summary: 'Change Status Tracking item'})
-    public async changeStatus(@Body() body): Promise<any> {
-        return this.trackingService.changeStatus(body);
+    public async changeStatus(@Body() changeStatusDto: ChangeStatusDto): Promise<any> {
+        return this.trackingService.changeStatus(changeStatusDto);
     }
 }
