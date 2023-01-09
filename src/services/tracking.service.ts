@@ -8,9 +8,7 @@ import {ITrackingService} from "./itracking.service";
 import {Tracking} from "../common/types";
 import {StatusTypes} from "../enums";
 import {CommonUtils} from "../common/common-utils";
-import {RequiredFieldsException} from "../exceptions/required-fields.exception";
 import {CreateTrackingDto} from "../dto/create-tracking.dto";
-import {FindOneParams} from "../dto/find-one-params.dto";
 import {ChangeStatusDto} from "../dto/change-status.dto";
 
 @Injectable()
