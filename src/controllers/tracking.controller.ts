@@ -29,14 +29,12 @@ export class TrackingController {
 
     @Put('/:id')
     @ApiOperation({summary: 'Update Tracking item'})
-    @ApiParam({name: 'id', type: String, required: true})
     public async updateTracking(@Param() params: FindOneParams, @Body() updateTrackingDto: UpdateTrackingDto): Promise<any> {
         return this.trackingService.updateTracking(params.id, updateTrackingDto);
     }
 
     @Delete('/:id')
     @ApiOperation({summary: 'Delete Tracking item'})
-    @ApiParam({name: 'id', type: String})
     public async deleteTracking(@Param() params: FindOneParams): Promise<any> {
         return this.trackingService.deleteTracking(params.id);
     }
