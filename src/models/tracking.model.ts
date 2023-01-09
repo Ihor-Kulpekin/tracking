@@ -1,5 +1,4 @@
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
-import {Schema as MongooseSchema} from 'mongoose';
 import {SearchOptions} from "../common/types";
 
 @Schema({
@@ -10,7 +9,7 @@ export class TrackingModel {
     @Prop({required: true})
     searchText: string;
 
-    @Prop({required: true, type: MongooseSchema.Types.Mixed})
+    @Prop({type: Object, required: true, inChannels: true, inChats: false})
     searchOptions: SearchOptions;
 
     @Prop()
