@@ -1,8 +1,7 @@
 import {DynamicModule, Module} from "@nestjs/common";
-import {ConfigModule} from "@nestjs/config";
-import {ConfigOptions} from "../services/config/interfaces/config-options.interface";
+import {ConfigModule, ConfigService} from "@nestjs/config";
+import {ConfigOptions} from "../common/config/interfaces/config-options.interface";
 import {CONFIG_OPTIONS} from "../common/constants";
-import {ConfigService} from "../services/config/config.service";
 
 @Module({
     imports: [
