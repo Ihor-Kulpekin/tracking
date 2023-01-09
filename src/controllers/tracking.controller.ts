@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, Get, Param, Post, Put, Query} from "@nestjs/common";
-import {TrackingService} from "../services/tracking.service";
+import {TrackingService} from "../services/tracking/tracking.service";
 import {ApiOperation, ApiTags, ApiResponse} from "@nestjs/swagger";
 import {CreateTrackingDto} from "../dto/create-tracking.dto";
 import {UpdateTrackingDto} from "../dto/update-tracking.dto";

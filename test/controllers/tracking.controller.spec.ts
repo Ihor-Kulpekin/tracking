@@ -1,7 +1,7 @@
 import {Model} from "mongoose";
 
 import {TrackingController} from "../../src/controllers/tracking.controller";
-import {TrackingService} from "../../src/services/tracking.service";
+import {TrackingService} from "../../src/services/tracking/tracking.service";
 import {Tracking} from "../../src/common/types";
 import {StatusTypes} from "../../src/enums";
 import {Test, TestingModule} from "@nestjs/testing";

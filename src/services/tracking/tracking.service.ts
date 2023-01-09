@@ -1,23 +1,23 @@
 import {Injectable} from "@nestjs/common";
 import { Model } from "mongoose";
-import {TrackingModel} from "../models/tracking.model";
+import {TrackingModel} from "../../models/tracking.model";
 import {InjectModel} from "@nestjs/mongoose";
 import { ObjectId } from 'mongodb';
 
 import {ITrackingService} from "./itracking.service";
-import {Tracking} from "../common/types";
-import {StatusTypes} from "../enums";
-import {CommonUtils} from "../common/common-utils";
-import {CreateTrackingDto} from "../dto/create-tracking.dto";
-import {ChangeStatusDto} from "../dto/change-status.dto";
-import {UpdateTrackingDto} from "../dto/update-tracking.dto";
+import {Tracking} from "../../common/types";
+import {StatusTypes} from "../../enums";
+import {CommonUtils} from "../../common/common-utils";
+import {CreateTrackingDto} from "../../dto/create-tracking.dto";
+import {ChangeStatusDto} from "../../dto/change-status.dto";
+import {UpdateTrackingDto} from "../../dto/update-tracking.dto";
 import {
     ResponseChangeStatusTrackingDto,
     ResponseCreateTrackingDto,
     ResponseDeleteTrackingDto,
     ResponseListTrackingDto,
     ResponseUpdateTrackingDto
-} from "../dto/response.dto";
+} from "../../dto/response.dto";
 
 @Injectable()
 export class TrackingService implements ITrackingService{

@@ -1,13 +1,13 @@
-import {CreateTrackingDto} from "../dto/create-tracking.dto";
-import {ChangeStatusDto} from "../dto/change-status.dto";
-import {UpdateTrackingDto} from "../dto/update-tracking.dto";
+import {CreateTrackingDto} from "../../dto/create-tracking.dto";
+import {ChangeStatusDto} from "../../dto/change-status.dto";
+import {UpdateTrackingDto} from "../../dto/update-tracking.dto";
 import {
     ResponseChangeStatusTrackingDto,
     ResponseCreateTrackingDto,
     ResponseDeleteTrackingDto,
     ResponseListTrackingDto,
     ResponseUpdateTrackingDto
-} from '../dto/response.dto';
+} from '../../dto/response.dto';
 
 export interface ITrackingService {
     getTrackings(query: any): Promise<ResponseListTrackingDto>;
