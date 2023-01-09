@@ -1,23 +1,25 @@
 import {CommonUtils} from "../../src/common/common-utils";
-import {INestApplication} from "@nestjs/common";
+import {QueryDto} from "../../src/dto/query.dto";
 
 describe('CommonUtils', () => {
     it('getFilters empty', () => {
-        const resultFilters = CommonUtils.getFilters({});
+        const resultFilters = CommonUtils.getFilters(<QueryDto>{});
 
         expect(resultFilters).toStrictEqual({});
     })
 
     it('getFilters not empty', () => {
-        const testQuery = {name: 'testName'};
+        const testQuery: any = {filters: {
+                name: 'testName'
+            }};
 
         const resultFilters = CommonUtils.getFilters(testQuery);
 
-        expect(resultFilters).toStrictEqual(testQuery);
+        expect(resultFilters).toStrictEqual({...testQuery.filters});
     })
 
     it('getOptions', () => {
-        const testQuery = {limit: '10', skip: '0', sort: 'created_at:desc'};
+        const testQuery: any = {limit: '10', skip: '0', sort: 'created_at:desc', filters: JSON.stringify({})};
 
         const resultFilters = CommonUtils.getOptions(testQuery);
 

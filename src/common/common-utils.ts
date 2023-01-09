@@ -4,11 +4,11 @@ export class CommonUtils {
     static getFilters(query: QueryDto) {
         const filters = {};
 
-        const keys = Object.keys(query).filter((item) => !['limit', 'skip', 'sort'].includes(item));
+        const keys = Object.keys(query?.filters ?? {});
 
         if (keys.length) {
             keys.forEach((keyItem) => {
-                filters[keyItem] = query[keyItem]
+                filters[keyItem] = query.filters[keyItem]
             })
         }
 

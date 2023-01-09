@@ -1,5 +1,5 @@
 import {StatusTypes} from "../enums";
-import {IsEnum, IsNumber, IsString} from "class-validator";
+import {IsEmpty, IsEnum, IsNumber, IsString} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class QueryDto {
@@ -17,6 +17,11 @@ export class QueryDto {
     sort: string
 
     @IsEnum(StatusTypes)
+    @IsEmpty()
     @ApiProperty({name: 'status', enum: StatusTypes, example: StatusTypes.Active, required: false})
     status: StatusTypes
+
+    @IsEmpty()
+    @ApiProperty({name: 'filters', example: JSON.stringify({name: 'test'})})
+    filters: any
 }
