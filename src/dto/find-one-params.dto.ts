@@ -3,6 +3,6 @@ import {ApiProperty} from "@nestjs/swagger";
 
 export class FindOneParams {
     @IsString()
-    @ApiProperty()
+    @ApiProperty({name: 'id', required: true})
     id: string;
 }
